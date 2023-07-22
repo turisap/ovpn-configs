@@ -1,59 +1,20 @@
-## Prepare
+## Tutorial
+* [how to setup openvpn on Debian](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-debian-10)
+* [how to setup Debian server with firewall](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-debian-10)
+* [how to setup Pihole with OpenVPN](https://www.digitalocean.com/community/tutorials/how-to-block-advertisements-at-the-dns-level-using-pi-hole-and-openvpn-on-ubuntu-16-04)
 
-* install openvpn
+
+## Troubleshooting
+* if Pihole installation does not ask for a static IP and gateway IP addresses check if this file is present `/etc/dhcpcd.conf` and create an empty one if not.
+* if connection hangs after pointing OpenVPN access server to Pihole instance check if the following configurations are present  in `server.conf`
 ```
-apt install openvpn
+topology subnet
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 10.8.0.1"
 ```
-
-* get the latest version of easyRSA [here](https://github.com/OpenVPN/easy-rsa/releases)
-* download the archive
-```
-    wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.5/EasyRSA-3.1.5.tgz
-```
-* extract the archive 
-```
-tar -xvzf EasyRSA-3.1.5.tgz
-```
-
-## Initialize Public Key Infrastructure
-
-* `cd cd EasyRSA-3.1.5/`
-* initialize pki `./easyrsa init-pki` 
-
-Adjust EasyRSA vars
-
-* `vim pki/vars`
-* set the following vars to this values
-```
-set_var EASYRSA_KEY_SIZE 4096
-set_var EASYRSA_CA_EXPIRE 3650
-set_var EASYRSA_CERT_EXPIRE 825
-```
-
-Prepare CA
-* build CA `./easyrsa build-ca nopass` 
-* build server `./easyrsa build-server-full nopass <<server name>>`
-* build test client `./easyrsa build-client-full test-client nopass`
-* generate diffie hellman param `./easyrsa gen-dh`
-* generate HMAC secret key `openvpn --genkey secret ta.key`
-
-
-## Copy generated files
-
-```
-cd /etc/openvpn/server/<<server name>>
-cp /root/EasyRSA-3.1.5/pki/ca.crt ./
-cp /root/EasyRSA-3.1.5/pki/ta.key ./
-cp /root/EasyRSA-3.1.5/pki/dh.pem ./
-cp /root/EasyRSA-3.1.5/pki/issued/<<server name>>-server.crt ./
-cp /root/EasyRSA-3.1.5/pki/issued/<<server name>>.key ./
-mkdir ccd
-```
-
 
 ## Handy tools
 
 * check logs `tail -f /var/log/ovpn-<<server name>>.log`
-* restart service `systemctl restart openvpn-server@<<server name>>`
-* check status `systemctl status openvpn-server@<<server name>>`
-# ovpn-configs
+* restart service `systemctl restart openvpn@<<server name>>`
+* check status `systemctl status openvpn@<<server name>>`
