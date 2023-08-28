@@ -18,3 +18,16 @@ push "dhcp-option DNS 10.8.0.1"
 * check logs `tail -f /var/log/ovpn-<<server name>>.log`
 * restart service `systemctl restart openvpn@<<server name>>`
 * check status `systemctl status openvpn@<<server name>>`
+
+## Express setup without CA
+* download the installation script
+```shell
+curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+chmod +x openvpn-install.sh
+```
+
+* run the script and follow the installation wizard
+
+```shell
+./openvpn-install.sh
+```
