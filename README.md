@@ -33,3 +33,6 @@ At this moment, the script has a bug. The bug is a deprecated option `openvpn --
 ```shell
 ./openvpn-install.sh
 ```
+
+## Wireguard express setup
+A quick installation script can be found [here](https://coin.host/blog/how-to-set-up-a-private-wireguard-vpn-server-on-a-vps)
