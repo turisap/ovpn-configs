@@ -22,9 +22,11 @@ push "dhcp-option DNS 10.8.0.1"
 ## Express setup without CA
 * download the installation script
 ```shell
-curl -O https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
-chmod +x openvpn-install.sh
+wget https://github.com/Nyr/openvpn-install/raw/master/openvpn-install.sh
+chmod 755 openvpn-install.sh
 ```
+
+At this moment, the script has a bug. The bug is a deprecated option `openvpn --genkey --secret` which I fixed manually to `openvpn --genkey secret`
 
 * run the script and follow the installation wizard
 
