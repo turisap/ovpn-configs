@@ -36,3 +36,8 @@ At this moment, the script has a bug. The bug is a deprecated option `openvpn --
 
 ## Wireguard express setup
 A quick installation script can be found [here](https://coin.host/blog/how-to-set-up-a-private-wireguard-vpn-server-on-a-vps)
+
+## Pihole local instance in a docker container
+* get `docker-compose.yml` from [pihole quickstart](https://github.com/turisap/ovpn-configs.git)
+* run `docker-compose up -d`
+* set DNS server to `127.0.0.1` in your network settings
